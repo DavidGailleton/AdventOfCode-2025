@@ -6,7 +6,7 @@
 /*   By: dgaillet <dgaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:39:53 by dgaillet          #+#    #+#             */
-/*   Updated: 2025/12/05 16:51:41 by dgaillet         ###   ########lyon.fr   */
+/*   Updated: 2025/12/06 20:21:39 by dgaillet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	check_if_invalid(long long nb)
 	size_t	len;
 
 	str = ft_lltoa(nb);
+	printf("%s\n", str);
 	if (!str)
 		return (0);
 	len = strlen(str);
@@ -56,6 +57,7 @@ static long long	*add_invalid(t_comb *comb, long long invalid)
 	}
 	temp[i] = invalid;
 	free(comb->invalids);
+	comb->nb_invalid++;
 	return (temp);
 }
 
@@ -90,6 +92,8 @@ static void	clear_lst(t_comb *lst)
 	}
 }
 
+//8175253565 -> too low
+//24157613387
 int	main(void)
 {
 	t_comb	*lst;
@@ -97,12 +101,13 @@ int	main(void)
 	int		fd;
 	int		i;
 	unsigned long long	result = 0;
-	
+
 	fd = open("input", O_RDONLY);
 	lst = ft_parsing(fd);
 	temp = lst;
 	while (temp)
 	{
+		//printf("%lld - %lld\n", temp->first, temp->second);
 		get_invalids(temp);
 		temp = temp->next;
 	}
@@ -110,6 +115,7 @@ int	main(void)
 	while (temp)
 	{
 		i = 0;
+		//printf("result = %lld", result);
 		while (i < temp->nb_invalid)
 		{
 			result += temp->invalids[i];
@@ -119,4 +125,11 @@ int	main(void)
 	}
 	printf("%llu", result);
 	clear_lst(lst);
+	close(fd);
 }
+
+//iterer sur chaque node
+	//applique une fonction
+		//incrmeenter le retour de fonction dans res
+//
+//return res 
