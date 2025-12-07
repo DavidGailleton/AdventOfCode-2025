@@ -6,7 +6,7 @@
 /*   By: dgaillet <dgaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:39:53 by dgaillet          #+#    #+#             */
-/*   Updated: 2025/12/06 20:42:04 by dgaillet         ###   ########lyon.fr   */
+/*   Updated: 2025/12/07 12:45:04 by dgaillet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ static int	check_if_invalid(long long nb)
 			temp = ft_substr(str, 0, i);
 			while (len > i * j)
 			{
-				if (ft_strncmp(temp, &str[i * j], i))
+				if (!ft_strncmp(temp, &str[i * j], i))
 				{
-					if (i * j >= len)
+					if (i * j >= (len - i))
 					{
 						printf("%lld\n", nb);
 						return (1);
 					}
-					else
-						break ;
 				}
+				else
+					break ;
 				j++;
 			}
 			free(temp);
@@ -104,7 +104,7 @@ static void	clear_lst(t_comb *lst)
 		if (lst->invalids)
 			free(lst->invalids);
 		free(lst);
-		lst = temp->next;
+		lst = temp;
 	}
 }
 
