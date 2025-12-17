@@ -6,7 +6,7 @@
 /*   By: dgaillet <dgaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:07:02 by dgaillet          #+#    #+#             */
-/*   Updated: 2025/12/16 19:30:20 by dgaillet         ###   ########lyon.fr   */
+/*   Updated: 2025/12/17 14:22:46 by dgaillet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
+// 21981441218167856 ; to high
+
 unsigned long long	calculate_res(t_lst *lst)
 {
 	unsigned long long	res = 0;
-	int					temp[4];
+	int					temp[4] = {0, 0, 0, 0};
 	int					i;
 	int					j;
 
@@ -39,6 +41,8 @@ unsigned long long	calculate_res(t_lst *lst)
 		j++;
 	}
 	j = 0;
+	if (lst->sign == '*')
+		res = 1;
 	while (j < 4)
 	{
 		if (temp[j])
@@ -51,7 +55,7 @@ unsigned long long	calculate_res(t_lst *lst)
 		j++;
 	}
 	printf("%llu\n", res);
-	return (res + calculate_res(lst->next));
+	return (res + calculate_res(lst->pre));
 }
 
 int	main(void)

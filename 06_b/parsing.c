@@ -6,7 +6,7 @@
 /*   By: dgaillet <dgaillet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 16:03:38 by dgaillet          #+#    #+#             */
-/*   Updated: 2025/12/16 20:14:05 by dgaillet         ###   ########lyon.fr   */
+/*   Updated: 2025/12/17 14:57:13 by dgaillet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void	add_nbr(char *strs[5], t_lst *lst, int i)
 	if (!lst)
 		return ;
 	k = 0;
-	while (strs[4][i + 1] != '*' && strs[4][i + 1] != '+')
+	while (i >= 0 && !(strs[0][i] == ' ' && strs[1][i] == ' ' && strs[2][i] == ' '
+		&& strs[3][i] == ' ' && strs[4][i] == ' '))
 	{
 		j = 0;
 		while (j < 4)
@@ -120,19 +121,19 @@ t_lst	*parsing(int fd)
 	int		i = -1;
 	t_lst	*lst = NULL;
 
-	while (++i < 6)
-		temp[i] = get_next_char(fd, '\n');
-	int_lst = ft_split(temp[0], ' ');
-	while (int_lst[i++])
+	temp[++i] = get_next_char(fd, '\n');
+	while (temp[i])
+		temp[++i] = get_next_char(fd, '\n');
+	int_lst = ft_split(temp[4], ' ');
+	i = 0;
+	while (int_lst[++i])
 		lst_add_back(&lst, new_lst());
 	clear_split(int_lst);
+	int_lst = ft_split(temp[4], ' ');
+	add_sign(lst, int_lst);
 	while (lst->next)
 		lst = lst->next;
 	add_nbr(temp, lst, strlen(temp[0]) - 2);
-	while (lst->pre)
-		lst = lst->pre;
-	int_lst = ft_split(temp[4], ' ');
-	add_sign(lst, int_lst);
 	i = -1;
 	while (++i < 6)
 		free(temp[i]);
